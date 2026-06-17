@@ -11,7 +11,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-[var(--editable-container)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <p className="text-xs font-black uppercase tracking-[0.28em]">{pagesContent.about.badge}</p>
             <h1 className="editorial-brand mt-5 max-w-5xl text-6xl font-black leading-[0.92] tracking-[-0.055em] sm:text-8xl">
-              Independent media, built for clear stories.
+              Media distribution built for credible visibility.
             </h1>
           </div>
         </section>
@@ -37,8 +37,8 @@ export default function AboutPage() {
 
         <section className="border-y border-black bg-[#171717] text-white">
           <div className="mx-auto flex max-w-[var(--editable-container)] flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-            <h2 className="editorial-brand max-w-3xl text-4xl font-black leading-none sm:text-5xl">Read the stories shaping the conversation.</h2>
-            <Link href="/search" className="inline-flex w-fit bg-[#c92f2f] px-6 py-4 text-xs font-black uppercase tracking-[0.18em]">Explore the archive</Link>
+            <h2 className="editorial-brand max-w-3xl text-4xl font-black leading-none sm:text-5xl">Launch announcements with structure, reach, and trust.</h2>
+            <Link href="/media-distribution" className="inline-flex w-fit bg-[#c92f2f] px-6 py-4 text-xs font-black uppercase tracking-[0.18em]">Explore campaigns</Link>
           </div>
         </section>
       </main>

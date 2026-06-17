@@ -134,34 +134,55 @@ function BackLink({ task }: { task: TaskKey }) {
 
 function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post: SitePost; related: SitePost[]; comments: Array<{ id: string; name: string; comment: string; createdAt: string }> }) {
   const images = getImages(post)
-  const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
+  const publisher = getField(post, ['publisher', 'brand', 'company', 'source']) || SITE_CONFIG.name
+  const industry = categoryOf(post, 'Media campaign')
+  const reach = getField(post, ['reach', 'views', 'impressions']) || '112K'
   return (
     <section className="bg-[#f7f4ef]">
-      <header className="border-b border-black/20">
-        <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+      <header className="border-b border-black/20 bg-[#07111f] text-white">
+        <div className="editable-reveal mx-auto max-w-[var(--editable-container)] px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
           <BackLink task={task} />
           <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-4 border-black pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
-            <span className="text-[#c92f2f]">{categoryOf(post, 'News')}</span>
-            {published ? <time>{published}</time> : null}
+            <span className="text-[#ffb4c4]">{categoryOf(post, 'News')}</span>
+            <span>Distribution campaign</span>
           </div>
           <h1 className="editorial-serif mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.5rem]">{post.title}</h1>
-          {summaryText(post) ? <p className="mt-6 max-w-4xl text-xl font-bold leading-8 text-black/68 sm:text-2xl">{summaryText(post)}</p> : null}
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              ['Industry', industry],
+              ['Publisher', publisher],
+              ['Estimated reach', reach],
+            ].map(([label, value]) => (
+              <div key={label} className="border border-white/15 bg-white/8 p-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/45">{label}</p>
+                <p className="mt-2 break-words text-sm font-black text-white">{String(value)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </header>
 
       {images[0] ? (
-        <figure className="mx-auto max-w-[1320px] border-x border-b border-black/15 bg-white">
+        <figure className="mx-auto max-w-[var(--editable-container)] border-x border-b border-black/15 bg-white">
           <img src={images[0]} alt="" className="max-h-[760px] w-full object-cover" />
           <figcaption className="border-t border-black/15 px-4 py-3 text-xs italic text-black/55 sm:px-6">Featured image for {post.title}</figcaption>
         </figure>
       ) : null}
 
-      <div className="mx-auto grid max-w-[1180px] gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_300px] lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-[var(--editable-container)] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,700px)_300px] lg:px-8 lg:py-16">
         <article className="min-w-0 border-t-4 border-black pt-8">
           <BodyContent post={post} />
           <EditableComments slug={post.slug} comments={comments} />
         </article>
         <div className="border-t-4 border-[#c92f2f] pt-5">
+          <div className="mb-5 bg-[#101820] p-5 text-white">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#f34a43]">Distribution metrics</p>
+            <div className="mt-5 grid gap-3 text-sm font-bold text-white/75">
+              <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#f34a43]" /> Status: Live campaign</p>
+              <p className="flex items-center gap-2"><Globe2 className="h-4 w-4 text-[#f34a43]" /> Network: Publisher outreach</p>
+              <p className="flex items-center gap-2"><Tag className="h-4 w-4 text-[#f34a43]" /> Category: {industry}</p>
+            </div>
+          </div>
           <RelatedPanel task={task} post={post} related={related} />
         </div>
       </div>
@@ -405,7 +426,7 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
           <div className="mt-4 grid gap-3 text-sm font-bold opacity-75">
             <p className="inline-flex items-center gap-2"><Tag className="h-4 w-4" /> Task: {taskConfig?.label || task}</p>
             <p className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Site: {SITE_CONFIG.name}</p>
-            {post.publishedAt ? <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p> : null}
+           
           </div>
         </div>
       ) : null}
