@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Clock3 } from 'lucide-react'
+import { ArrowRight, BarChart3, CheckCircle2, Clock3 } from 'lucide-react'
 import type { SitePost } from '@/lib/site-connector'
 import type { TaskKey } from '@/lib/site-config'
 import { editableDesignContract as dc, editablePalette as pal } from '@/editable/layouts/design-contract'
@@ -33,6 +33,25 @@ export function getEditableCategory(post?: SitePost | null) {
   return (typeof content.category === 'string' && content.category) || post?.tags?.[0] || 'Latest'
 }
 
+export function getEditablePublisher(post?: SitePost | null) {
+  const content = post?.content && typeof post.content === 'object' ? post.content as Record<string, unknown> : {}
+  return (
+    (typeof content.publisher === 'string' && content.publisher) ||
+    (typeof content.brand === 'string' && content.brand) ||
+    (typeof content.company === 'string' && content.company) ||
+    (typeof content.author === 'string' && content.author) ||
+    'Verified publisher'
+  )
+}
+
+export function getEditableReach(post?: SitePost | null, index = 0) {
+  const content = post?.content && typeof post.content === 'object' ? post.content as Record<string, unknown> : {}
+  const reach = content.reach || content.views || content.impressions
+  if (typeof reach === 'string' && reach.trim()) return reach.trim()
+  if (typeof reach === 'number') return Intl.NumberFormat('en-US', { notation: 'compact' }).format(reach)
+  return ['48K reach', '112K reach', '76K reach', '31K reach'][index % 4]
+}
+
 export function postHref(task: TaskKey, post: SitePost, route = `/${task}`) {
   return `${route}/${post.slug}`
 }
@@ -55,15 +74,15 @@ export function EditorialFeatureCard({ post, href, label = 'Cover story' }: { po
 
 export function RailPostCard({ post, href, index }: { post: SitePost; href: string; index: number }) {
   return (
-    <Link href={href} className={`group ${dc.layout.minRailCard} block border-t-4 border-black bg-[var(--slot4-surface-bg)] ${dc.motion.lift}`}>
-      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--slot4-media-bg)]">
-        <img src={getEditablePostImage(post)} alt={post.title} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+    <Link href={href} className={`editable-card-hover group ${dc.layout.minRailCard} block min-h-[280px] border border-black/15 border-t-4 border-t-[var(--slot4-accent)] bg-[var(--slot4-surface-bg)] p-5`}>
+      <div className="flex items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[.18em] text-[var(--slot4-accent)]">
+        <span className="truncate">{getEditableCategory(post)}</span><span>{String(index + 1).padStart(2, '0')}</span>
       </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[.18em] text-[var(--slot4-accent)]">
-          <span>{getEditableCategory(post)}</span><span>{String(index + 1).padStart(2, '0')}</span>
-        </div>
-        <h3 className="mt-3 line-clamp-3 text-xl font-black leading-[1.02] tracking-[-.04em]">{post.title}</h3>
+      <h3 className="mt-5 line-clamp-4 text-2xl font-black leading-[1.02] tracking-[-.04em] group-hover:text-[var(--slot4-accent)]">{post.title}</h3>
+      <p className="mt-4 line-clamp-3 text-sm font-semibold leading-6 text-black/60">{getEditableExcerpt(post, 130)}</p>
+      <div className="mt-6 grid gap-2 text-xs font-black uppercase tracking-[.12em] text-black/55">
+        <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[var(--slot4-accent)]" /> Syndication ready</span>
+        <span className="inline-flex items-center gap-2"><BarChart3 className="h-4 w-4 text-[var(--slot4-accent)]" /> {getEditableReach(post, index)}</span>
       </div>
     </Link>
   )

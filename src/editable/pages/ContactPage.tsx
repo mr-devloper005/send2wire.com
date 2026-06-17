@@ -6,9 +6,9 @@ import { EditableContactLeadForm } from '@/editable/components/EditableContactLe
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 
 const desks = [
-  { icon: FileText, title: 'Editorial desk', body: 'Send story ideas, corrections, source material, and publication questions.' },
-  { icon: Megaphone, title: 'Media partnerships', body: 'Discuss distribution, syndication, newsroom collaborations, and campaigns.' },
-  { icon: Mail, title: 'General support', body: 'Reach the team for account, publishing, or site-related help.' },
+  { icon: FileText, title: 'Press release review', body: 'Send campaign details, source material, quotes, and publishing requirements for review.' },
+  { icon: Megaphone, title: 'Media outreach', body: 'Discuss distribution strategy, syndication lanes, publisher targeting, and campaign visibility.' },
+  { icon: Mail, title: 'Publisher support', body: 'Reach the team for account access, submission guidance, or active campaign questions.' },
 ]
 
 export default function ContactPage() {
