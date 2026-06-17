@@ -15,14 +15,14 @@ body {
 }
 
 *::selection {
-  background: var(--editorial-red) !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff;
+  background: #101820 !important;
+  color: #ffefe7 !important;
+  -webkit-text-fill-color: #ffefe7;
 }
 
 *::-moz-selection {
-  background: var(--editorial-red) !important;
-  color: #fff !important;
+  background: #101820 !important;
+  color: #ffefe7 !important;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -41,6 +41,29 @@ body {
 }
 
 .editorial-rule { border-color: color-mix(in srgb, var(--editorial-ink) 22%, transparent); }
+
+.editable-reveal {
+  animation: editable-slide-up .55s ease both;
+}
+
+.editable-reveal-delay {
+  animation: editable-slide-up .7s ease both;
+  animation-delay: .08s;
+}
+
+.editable-card-hover {
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background-color .28s ease;
+}
+
+.editable-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 55px rgba(16, 24, 32, .12);
+}
+
+@keyframes editable-slide-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .article-content {
   color: #24211e;
@@ -80,6 +103,26 @@ body {
 .article-content img { width: 100%; margin: 2em 0; }
 
 input, textarea, select, button { border-radius: 0 !important; }
+
+input, textarea, select {
+  color: #111 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(17, 17, 17, .42) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .001ms !important;
+  }
+}
 
 @media (max-width: 640px) {
   .article-content { font-size: 1.05rem; line-height: 1.72; }

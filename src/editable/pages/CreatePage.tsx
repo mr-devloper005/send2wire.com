@@ -33,6 +33,7 @@ const taskIcon: Record<string, typeof FileText> = {
 }
 
 const fieldClass = 'rounded-2xl border border-[var(--editable-border)] bg-white px-4 py-3 text-sm font-bold text-[var(--editable-page-text,#2f1d16)] outline-none transition placeholder:text-current/35 focus:border-current'
+const labelClass = 'grid gap-2 text-sm font-black text-black/75'
 
 const saveDraft = (draft: DraftPost) => {
   try {
@@ -138,14 +139,14 @@ export default function CreatePage() {
               </div>
 
               <div className="mt-6 grid gap-4">
-                <input className={fieldClass} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Post title" required />
+                <label className={labelClass}>Campaign headline<input className={fieldClass} value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Funding announcement, launch, partnership, or PR headline" required /></label>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <input className={fieldClass} value={category} onChange={(event) => setCategory(event.target.value)} placeholder="Category" />
-                  <input className={fieldClass} value={url} onChange={(event) => setUrl(event.target.value)} placeholder="Website or source URL" />
+                  <label className={labelClass}>Industry category<input className={fieldClass} value={category} onChange={(event) => setCategory(event.target.value)} placeholder="Technology, finance, healthcare..." /></label>
+                  <label className={labelClass}>Source URL<input className={fieldClass} value={url} onChange={(event) => setUrl(event.target.value)} placeholder="Website or official source URL" /></label>
                 </div>
-                <input className={fieldClass} value={image} onChange={(event) => setImage(event.target.value)} placeholder="Featured image URL" />
-                <textarea className={`${fieldClass} min-h-24`} value={summary} onChange={(event) => setSummary(event.target.value)} placeholder="Short summary" required />
-                <textarea className={`${fieldClass} min-h-48`} value={body} onChange={(event) => setBody(event.target.value)} placeholder="Main content, details, notes, or description" required />
+                <label className={labelClass}>Campaign image URL<input className={fieldClass} value={image} onChange={(event) => setImage(event.target.value)} placeholder="Optional campaign or brand image URL" /></label>
+                <label className={labelClass}>Distribution summary<textarea className={`${fieldClass} min-h-24`} value={summary} onChange={(event) => setSummary(event.target.value)} placeholder="Summarize the announcement, audience, and media angle" required /></label>
+                <label className={labelClass}>Press release content<textarea className={`${fieldClass} min-h-48`} value={body} onChange={(event) => setBody(event.target.value)} placeholder="Add the release body, source details, quotes, and campaign notes" required /></label>
               </div>
 
               {created ? (
